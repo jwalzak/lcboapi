@@ -19,9 +19,13 @@ function getJSON(url) {
 let data = getJSON(`https://lcboapi.com/products?access_key=${ ACCESS_KEY }`);
 let parsedJSON = JSON.parse(data);
 
-
 for(let i = 0; i<parsedJSON.result.length; i++){
   if(parsedJSON.result[i].primary_category == "Beer"){
-    let value = parsedJSON.result[i].primary_category;
+    let value = parsedJSON.result[i];
+    let price = (value.price_in_cents/100).toFixed(2);
+    let name = value.name;
+    let container = value.package_unit_type;
+    let amount = value.total_package_units;
+    document.writeln(price + " " + name + " " + container + " " + amount);
   }
 }
