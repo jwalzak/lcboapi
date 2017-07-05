@@ -1,4 +1,4 @@
-const ACCESS_KEY = ;
+const ACCESS_KEY = 'MDo2MDQ2OTliNi02MTI4LTExZTctOGZhMC0zZjZkYzIzMjRjNWY6Z3hFMlp2RGhNQzRGdGVzakZPRTE1STJteDRVVWdkTTU3Y2tx';
 
 function getJSON(url) {
   var resp;
@@ -17,5 +17,11 @@ function getJSON(url) {
 }
 
 let data = getJSON(`https://lcboapi.com/products?access_key=${ ACCESS_KEY }`);
+let parsedJSON = JSON.parse(data);
 
-document.addEventListener("DOMContentLoaded", document.querySelector(".json").innerHTML = data);
+
+for(let i = 0; i<parsedJSON.result.length; i++){
+  if(parsedJSON.result[i].primary_category == "Beer"){
+    let value = parsedJSON.result[i].primary_category;
+  }
+}
