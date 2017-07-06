@@ -14,12 +14,12 @@ function getJSON(url) {
   }
 
   return resp;
-}
+}//end getJSON
 
-let data = getJSON(`https://lcboapi.com/products?access_key=${ ACCESS_KEY }`);
+let data = getJSON(`https://lcboapi.com/products?access_key=${ ACCESS_KEY }&per_page=100`);
 let parsedJSON = JSON.parse(data);
 const types = parsedJSON.result;
-const liquorType = [...new Set(types.map(item => item.primary_category))];
+const liquorType = [...new Set(types.map(item => item.primary_category))];//To get unique liquor categories.
 let select = document.createElement('select'),
     option,
     i = 0;
@@ -34,15 +34,16 @@ for(; i < liquorType.length; i++){
   option.setAttribute('value', liquorType[i]);
   option.appendChild(document.createTextNode(liquorType[i]));
   select.appendChild(option);
-}
+}//End for
 
 select.setAttribute('class', 'list');
 document.body.appendChild(select);
 
+//This will append all the desired data to the site.
 select.addEventListener('change', function(){
   let e = document.getElementById('select');
   let choice = e.options[e.selectedIndex].value;
-  console.log(choice);
+
   if(choice === 'empty'){
     console.log(' ');
   } else {
@@ -57,4 +58,4 @@ select.addEventListener('change', function(){
       }
     }
   }
-});
+});//End eventListener
