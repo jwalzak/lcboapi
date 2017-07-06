@@ -23,6 +23,11 @@ const liquorType = [...new Set(types.map(item => item.primary_category))];
 let select = document.createElement('select'),
     option,
     i = 0;
+select.setAttribute("id", "select");
+let blank = document.createElement('option');
+blank.setAttribute('value', "empty");
+blank.appendChild(document.createTextNode(" "));
+select.appendChild(blank);
 
 for(; i < liquorType.length; i++){
   option = document.createElement('option');
@@ -34,17 +39,22 @@ for(; i < liquorType.length; i++){
 select.setAttribute('class', 'list');
 document.body.appendChild(select);
 
-// select.addEventListener('change', getBooze);
-
-// function getBooze(type){
-// for(let i = 0; i<parsedJSON.result.length; i++){
-//   if(parsedJSON.result[i].primary_category == "Beer"){
-//     let value = parsedJSON.result[i];
-//     let price = (value.price_in_cents/100).toFixed(2);
-//     let name = value.name;
-//     let container = value.package_unit_type;
-//     let amount = value.total_package_units;
-//     document.writeln(price + " " + name + " " + container + " " + amount + "<br/>");
-//   }
-// }
-// }
+select.addEventListener('change', function(){
+  let e = document.getElementById('select');
+  let choice = e.options[e.selectedIndex].value;
+  console.log(choice);
+  if(choice === 'empty'){
+    console.log(' ');
+  } else {
+    for(let i = 0; i < parsedJSON.result.length; i++){
+      if(parsedJSON.result[i].primary_category === choice){
+        let value = parsedJSON.result[i];
+        let price = (value.price_in_cents/100).toFixed(2);
+        let name = value.name;
+        let container = value.package_unit_type;
+        let amount = value.total_package_units;
+        document.writeln(price + " " + name + " " + container + " " + amount + "<br/>");
+      }
+    }
+  }
+});
