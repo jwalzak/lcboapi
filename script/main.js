@@ -31,8 +31,12 @@ for(; i < liquorType.length; i++){
   select.appendChild(option);
 }
 
+select.setAttribute('class', 'list');
 document.body.appendChild(select);
 
+// select.addEventListener('change', getBooze);
+
+// function getBooze(type){
 // for(let i = 0; i<parsedJSON.result.length; i++){
 //   if(parsedJSON.result[i].primary_category == "Beer"){
 //     let value = parsedJSON.result[i];
@@ -42,4 +46,5 @@ document.body.appendChild(select);
 //     let amount = value.total_package_units;
 //     document.writeln(price + " " + name + " " + container + " " + amount + "<br/>");
 //   }
+// }
 // }
