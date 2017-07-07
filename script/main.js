@@ -37,7 +37,8 @@ for(; i < liquorType.length; i++){
 }//End for
 
 select.setAttribute('class', 'list');
-document.body.appendChild(select);
+var json = document.querySelector('.json');
+json.appendChild(select);
 
 //This will append all the desired data to the site.
 select.addEventListener('change', function(){
@@ -54,7 +55,13 @@ select.addEventListener('change', function(){
         let name = value.name;
         let container = value.package_unit_type;
         let amount = value.total_package_units;
-        document.writeln(price + " " + name + " " + container + " " + amount + "<br/>");
+        let volume = value.volume_in_milliliters;
+        let jsonDiv = document.querySelector('.json');
+        jsonDiv.innerHTML += `<div class='result'><h3>${ name }</h3>
+                              <p>Price: ${ price }</p>
+                              <p>Container Type: ${ container }</p>
+                              <p>Volume: ${ volume }  ml</p>
+                              <p>Amount of containers: ${ amount }</p></div>`
       }
     }
   }
