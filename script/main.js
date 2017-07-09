@@ -45,9 +45,7 @@ select.addEventListener('change', function(){
   let e = document.getElementById('select');
   let choice = e.options[e.selectedIndex].value;
 
-  if(choice === 'empty'){
-    console.log(' ');
-  } else {
+  if(choice !== 'empty'){
     for(let i = 0; i < parsedJSON.result.length; i++){
       if(parsedJSON.result[i].primary_category === choice){
         let value = parsedJSON.result[i];
