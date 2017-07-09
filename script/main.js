@@ -37,8 +37,8 @@ for(; i < liquorType.length; i++){
 }//End for
 
 select.setAttribute('class', 'list');
-var json = document.querySelector('.json');
-json.appendChild(select);
+var slct = document.querySelector('.slct');
+slct.appendChild(select);
 
 //This will append all the desired data to the site.
 select.addEventListener('change', function(){
@@ -55,7 +55,7 @@ select.addEventListener('change', function(){
         let amount = value.total_package_units;
         let volume = value.volume_in_milliliters;
         let jsonDiv = document.querySelector('.json');
-        jsonDiv.innerHTML += `<div class='result'><h3>${ name }</h3>
+        jsonDiv.innerHTML = `<div class='result'><h3>${ name }</h3>
                               <p>Price: ${ price }</p>
                               <p>Container Type: ${ container }</p>
                               <p>Volume: ${ volume }  ml</p>
