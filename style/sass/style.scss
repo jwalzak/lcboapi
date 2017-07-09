@@ -1,7 +1,18 @@
+#select {
+  display: block;
+  margin-bottom: 10px;
+}
+
 h3 {
   text-decoration:
     red
     overline
-    underline
-    wavy;
+    underline;
+}
+
+.result {
+  display: inline-block;
+  margin: 2px;
+  padding: 5px;
+  border: 1px solid #666;
 }
