@@ -1,8 +1,8 @@
 const ACCESS_KEY = 'MDo2MDQ2OTliNi02MTI4LTExZTctOGZhMC0zZjZkYzIzMjRjNWY6Z3hFMlp2RGhNQzRGdGVzakZPRTE1STJteDRVVWdkTTU3Y2tx';
 
 function getJSON(url) {
-  var resp;
-  var xmlHttp;
+  let resp;
+  let xmlHttp;
 
   resp = '';
   xmlHttp = new XMLHttpRequest();
@@ -37,7 +37,7 @@ for(; i < liquorType.length; i++){
 }//End for
 
 select.setAttribute('class', 'list');
-var slct = document.querySelector('.slct');
+let slct = document.querySelector('.slct');
 slct.appendChild(select);
 
 //This will append all the desired data to the site.
