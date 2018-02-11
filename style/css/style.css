@@ -1,3 +1,6 @@
+body {
+  background-color: #fdfdfd; }
+
 #select {
   display: block;
   margin-bottom: 10px; }
@@ -6,15 +9,13 @@ h3 {
   text-decoration: red overline underline; }
 
 .json {
-  border: 10px solid black;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
   grid-template-rows: minmax(1fr, 150px); }
 
 .result {
-  display: inline-block;
-  margin: 2px;
-  padding: 5px;
+  align-self: center;
   border: 1px solid #666; }
 
 /*# sourceMappingURL=style.css.map */
