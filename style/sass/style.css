@@ -8,8 +8,7 @@ h3 {
 .json {
   border: 10px solid black;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: minmax(1fr, 150px); }
+  grid-template-columns: repeat(3, 1fr); }
 
 .result {
   display: inline-block;

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const ACCESS_KEY = 'MDo2MDQ2OTliNi02MTI4LTExZTctOGZhMC0zZjZkYzIzMjRjNWY6Z3hFMlp2RGhNQzRGdGVzakZPRTE1STJteDRVVWdkTTU3Y2tx';
 
 function getJSON(url) {
@@ -29,7 +30,7 @@ blank.setAttribute('value', "empty");
 blank.appendChild(document.createTextNode(" "));
 select.appendChild(blank);
 
-for(; i < liquorType.length; i++){
+for(i = 0; i < liquorType.length; i++){
   option = document.createElement('option');
   option.setAttribute('value', liquorType[i]);
   option.appendChild(document.createTextNode(liquorType[i]));
@@ -46,6 +47,8 @@ select.addEventListener('change', function(){
   let choice = e.options[e.selectedIndex].value;
 
   if(choice !== 'empty'){
+    let jsonDiv = document.querySelector('.json');
+    jsonDiv.innerHTML = '';
     for(let i = 0; i < parsedJSON.result.length; i++){
       if(parsedJSON.result[i].primary_category === choice){
         let value = parsedJSON.result[i];
@@ -54,12 +57,14 @@ select.addEventListener('change', function(){
         let container = value.package_unit_type;
         let amount = value.total_package_units;
         let volume = value.volume_in_milliliters;
-        let jsonDiv = document.querySelector('.json');
-        jsonDiv.innerHTML = `<div class='result'><h3>${ name }</h3>
+        const img = value.image_thumb_url
+        jsonDiv.innerHTML += `<div class='result'><h3>${ name }</h3>
                               <p>Price: ${ price }</p>
                               <p>Container Type: ${ container }</p>
                               <p>Volume: ${ volume }  ml</p>
-                              <p>Amount of containers: ${ amount }</p></div>`
+                              <p>Amount of containers: ${ amount }</p>
+                              <img src="${ img }" alt="Image of ${ name }" />
+                              </div>`
       }
     }
   }

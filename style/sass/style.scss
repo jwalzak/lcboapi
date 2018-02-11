@@ -10,6 +10,13 @@ h3 {
     underline;
 }
 
+.json {
+  border: 10px solid black;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: minmax(1fr, 150px);
+}
+
 .result {
   display: inline-block;
   margin: 2px;
