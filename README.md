@@ -10,7 +10,8 @@ The project uses ES6 JavaScript for the most part.
 
 ## Things I plan on Refactoring
 
-- Use the Fetch API rather than using XmlHttpRequest method
-- Switch any let declarations to const where applicable
-- Change any function declarations to arrow functions
-- Change for loops to array methods if applicable
+- [x] Create FUNCTIONS, like not a person who doesn't create functions.
+- [x] Use the Fetch API rather than using XmlHttpRequest method
+- [x] Switch any let declarations to const where applicable
+- [x] Change any function declarations to arrow functions
+- [] Change for loops to array methods if applicable
