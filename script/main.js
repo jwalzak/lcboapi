@@ -19,15 +19,15 @@ fetch(`https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100`, {
     nextPage = res.pager.next_page //This one changes, don't unlet it
     liquorTypes.sort()
     createSelect()
+    createButton(nextPage)
     return res
   })
   .then(res => {
-    console.log(res)
     populatePage(res)
   })
   .catch(e => {
     console.log(`Something went wrong`, e)
-  })
+  }) // End Fetch
 
 function createSelect() {
   let select = document.createElement('select'),
@@ -41,7 +41,6 @@ function createSelect() {
   select.appendChild(blank)
 
   // Takes the array liquorType and assigns it to the dropdown menu.
-
   for (i = 0; i < liquorTypes.length; i++) {
     option = document.createElement('option')
     option.setAttribute('value', liquorTypes[i])
@@ -69,26 +68,62 @@ function populatePage(res) {
           const value = res.result[i] // added for readability
           const price = (value.price_in_cents / 100).toFixed(2) // Convert to dollars and cents
           jsonDiv.innerHTML += `<div class='result'><h3>${value.name}</h3>
-                              <p>Price: ${price}</p>
-                              <p>Container Type: ${value.package_unit_type}</p>
-                              <p>Volume: ${value.volume_in_milliliters}  ml</p>
-                              <p>Amount of containers: ${
-                                value.total_package_units
-                              }</p>
-                              <img src="${
-                                value.image_thumb_url
-                              }" alt="Image of ${value.name}" />
-                              </div>`
+            <p>Price: ${price}</p>
+            <p>Container Type: ${value.package_unit_type}</p>
+            <p>Volume: ${value.volume_in_milliliters}  ml</p>
+            <p>Amount of containers: ${value.total_package_units}</p>
+            <img src="${value.image_thumb_url}" alt="Image of ${value.name}" />
+            </div>`
         }
       }
     }
   }) //End eventListener
-}
+} // End populatePage()
+
+function createButton(nextPage) {
+  const selectDiv = document.querySelector('.slct')
+  const button = document.createElement('button')
+  const jsonDiv = document.querySelector('.json')
+  button.addEventListener(
+    'click',
+    function() {
+      fetch(
+        `https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100&page=${nextPage}`,
+        {
+          method: 'GET',
+        }
+      )
+        .then(res => {
+          return (res = res.json())
+        })
+        .then(res => {
+          return nextPage = res.pager.next_page,
+          res})
+        .then(res => populatePage(res))
+    },
+    false
+  )
+
+  button.addEventListener(
+    'click',
+    function() {
+      jsonDiv.innerHTML = ''
+    },
+    false
+  )
+  button.innerHTML = 'Next Page'
+  selectDiv.appendChild(button)
+} // End create Button
 
 function newPage(next) {
-  const newData = getJSON(
-    `https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100&page=${next}`
+  fetch(
+    `https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100&page=${next}`,
+    {
+      method: 'GET',
+    }
   )
-  const nextData = JSON.parse(newData)
-  console.log(nextData)
+    .then(res => {
+      return (res = res.json())
+    })
+    .then(res => populatePage(res), nextPage++)
 }
