@@ -29,7 +29,6 @@ function createSelect() {
     option,
     i = 0
   select.setAttribute('id', 'select')
-  console.log(nextPage)
   const blank = document.createElement('option')
   blank.setAttribute('value', 'empty')
   blank.appendChild(document.createTextNode(' '))
