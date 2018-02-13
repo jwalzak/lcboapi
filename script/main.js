@@ -8,8 +8,7 @@ fetch(`https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100`, {
   method: 'GET',
 })
   .then(res => {
-    // Convert to JSON
-    return res.json()
+    return res.json() // Convert to JSON
   })
   .then(res => {
     liquorTypes = res.result
@@ -90,6 +89,7 @@ function createButton(nextPage) {
       .then(res => populatePage(res))
       .catch(e => console.error('There was an error', e))
   })
+  button.setAttribute('class', 'button')
   button.innerHTML = 'Next Page'
   selectDiv.appendChild(button)
 } // End createButton()

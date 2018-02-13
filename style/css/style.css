@@ -2,20 +2,34 @@ body {
   background-color: #fdfdfd; }
 
 #select {
-  display: block;
+  display: inline-block;
   margin-bottom: 10px; }
 
+.header {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  text-align: center; }
+
+.sub-header {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; }
+
 h3 {
-  text-decoration: red overline underline; }
+  font-family: Arial, Helvetica, sans-serif; }
+
+p {
+  text-align: justify; }
 
 .json {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  grid-template-rows: minmax(1fr, 150px); }
+  grid-gap: 20px; }
 
 .result {
-  align-self: center;
-  border: 1px solid #666; }
+  text-align: center;
+  align-self: center; }
+
+.button {
+  color: white;
+  background-color: #010101; }
 
 /*# sourceMappingURL=style.css.map */
