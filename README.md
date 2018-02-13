@@ -14,7 +14,7 @@ The project uses ES6 JavaScript for the most part.
 - [x] Use the Fetch API rather than using XmlHttpRequest method
 - [x] Switch any let declarations to const where applicable
 - [x] Change any function declarations to arrow functions
-- [ ] Change for loops to array methods if applicable
+- [x] Change for loops to array methods if applicable
 
 ## Things to make better or things to add
 - [ ] Change the behaviour of changing pages. Make it so it shows the next page of what every type of liquor the user is currently looking at.

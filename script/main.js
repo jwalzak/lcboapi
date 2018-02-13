@@ -17,17 +17,12 @@ fetch(`https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100`, {
       ...new Set(liquorTypes.map(single => single.primary_category)),
     ] // Gets unique array values
     nextPage = res.pager.next_page //This one changes, don't unlet it
-    liquorTypes.sort()
     createSelect()
     createButton(nextPage)
     return res
   })
-  .then(res => {
-    populatePage(res)
-  })
-  .catch(e => {
-    console.log(`Something went wrong`, e)
-  }) // End Fetch
+  .then(res => populatePage(res))
+  .catch(e => console.error(`Something went wrong`, e)) // End Fetch
 
 function createSelect() {
   let select = document.createElement('select'),
@@ -40,18 +35,18 @@ function createSelect() {
   blank.appendChild(document.createTextNode(' '))
   select.appendChild(blank)
 
-  // Takes the array liquorType and assigns it to the dropdown menu.
-  for (i = 0; i < liquorTypes.length; i++) {
+  // Convert to .map array method
+  liquorTypes.map(type => {
     option = document.createElement('option')
-    option.setAttribute('value', liquorTypes[i])
-    option.appendChild(document.createTextNode(liquorTypes[i]))
+    option.setAttribute('value', type)
+    option.appendChild(document.createTextNode(type))
     select.appendChild(option)
-  } //End for
+  })
 
   select.setAttribute('class', 'list')
   const slct = document.querySelector('.slct')
   slct.appendChild(select)
-}
+} // End createSelect()
 
 function populatePage(res) {
   //This will append all the desired data to the site.
@@ -63,9 +58,9 @@ function populatePage(res) {
       const jsonDiv = document.querySelector('.json')
       jsonDiv.innerHTML = ''
 
-      for (let i = 0; i < res.result.length; i++) {
-        if (res.result[i].primary_category === choice) {
-          const value = res.result[i] // added for readability
+      // Map res.result to get all values that are the chosen liquorType
+      res.result.map(value => {
+        if (value.primary_category === choice) {
           const price = (value.price_in_cents / 100).toFixed(2) // Convert to dollars and cents
           jsonDiv.innerHTML += `<div class='result'><h3>${value.name}</h3>
             <p>Price: ${price}</p>
@@ -75,7 +70,7 @@ function populatePage(res) {
             <img src="${value.image_thumb_url}" alt="Image of ${value.name}" />
             </div>`
         }
-      }
+      })
     }
   }) //End eventListener
 } // End populatePage()
@@ -84,46 +79,18 @@ function createButton(nextPage) {
   const selectDiv = document.querySelector('.slct')
   const button = document.createElement('button')
   const jsonDiv = document.querySelector('.json')
-  button.addEventListener(
-    'click',
-    function() {
-      fetch(
-        `https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100&page=${nextPage}`,
-        {
-          method: 'GET',
-        }
-      )
-        .then(res => {
-          return (res = res.json())
-        })
-        .then(res => {
-          return nextPage = res.pager.next_page,
-          res})
-        .then(res => populatePage(res))
-    },
-    false
-  )
-
-  button.addEventListener(
-    'click',
-    function() {
-      jsonDiv.innerHTML = ''
-    },
-    false
-  )
+  button.addEventListener('click', function() {
+    fetch(
+      `https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100&page=${nextPage}`,
+      { method: 'GET' }
+    )
+      .then(res => (res = res.json()))
+      .then(res => {
+        return (nextPage = res.pager.next_page), res
+      })
+      .then(res => populatePage(res))
+      .catch(e => console.error('There was an error', e))
+  })
   button.innerHTML = 'Next Page'
   selectDiv.appendChild(button)
-} // End create Button
-
-function newPage(next) {
-  fetch(
-    `https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100&page=${next}`,
-    {
-      method: 'GET',
-    }
-  )
-    .then(res => {
-      return (res = res.json())
-    })
-    .then(res => populatePage(res), nextPage++)
-}
+} // End createButton()
