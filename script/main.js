@@ -1,11 +1,12 @@
 /* eslint-disable */
 const ACCESS_KEY =
   'MDo2MDQ2OTliNi02MTI4LTExZTctOGZhMC0zZjZkYzIzMjRjNWY6Z3hFMlp2RGhNQzRGdGVzakZPRTE1STJteDRVVWdkTTU3Y2tx'
-let nextPage, liquorTypes
+let nextPage, prevPage, liquorTypes
 
 // Changing to fetch rather than XMLHttpRequest
 fetch(`https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100`, {
   method: 'GET',
+  mode: 'cors',
 })
   .then(res => {
     return res.json() // Convert to JSON
@@ -16,8 +17,10 @@ fetch(`https://lcboapi.com/products?access_key=${ACCESS_KEY}&per_page=100`, {
       ...new Set(liquorTypes.map(single => single.primary_category)),
     ] // Gets unique array values
     nextPage = res.pager.next_page //This one changes, don't unlet it
+    prevPage = res.pager.next_page - 1 //This one changes, don't unlet it
     createSelect()
-    createButton(nextPage)
+    createButton(prevPage, 'Previous Page')
+    createButton(nextPage, 'Next Page')
     return res
   })
   .then(res => populatePage(res))
@@ -46,34 +49,42 @@ function createSelect() {
   slct.appendChild(select)
 } // End createSelect()
 
-function populatePage(res) {
+function populatePage(res, choice = 'empty') {
   //This will append all the desired data to the site.
   select.addEventListener('change', () => {
     const e = document.getElementById('select')
     const choice = e.options[e.selectedIndex].value
-
-    if (choice !== 'empty') {
-      const jsonDiv = document.querySelector('.json')
-      jsonDiv.innerHTML = ''
-
-      // Map res.result to get all values that are the chosen liquorType
-      res.result.map(value => {
-        if (value.primary_category === choice) {
-          const price = (value.price_in_cents / 100).toFixed(2) // Convert to dollars and cents
-          jsonDiv.innerHTML += `<div class='result'><h3>${value.name}</h3>
-            <p>Price: ${price}</p>
-            <p>Container Type: ${value.package_unit_type}</p>
-            <p>Volume: ${value.volume_in_milliliters}  ml</p>
-            <p>Amount of containers: ${value.total_package_units}</p>
-            <img src="${value.image_thumb_url}" alt="Image of ${value.name}" />
-            </div>`
-        }
-      })
-    }
+    console.log(choice)
+    domManipulation(res, choice)
   }) //End eventListener
 } // End populatePage()
 
-function createButton(nextPage) {
+function domManipulation(res, choice) {
+  if (choice !== 'empty') {
+    const jsonDiv = document.querySelector('.json')
+    jsonDiv.innerHTML = ''
+    // Map res.result to get all values that are the chosen liquorType
+    let number = 0
+    res.result.map(value => {
+      if (value.primary_category === choice) {
+        number++
+        let showNumber = document.querySelector('.itemNumber')
+        showNumber.innerHTML = `Showing ${number} ${choice}`
+
+        const price = (value.price_in_cents / 100).toFixed(2) // Convert to dollars and cents
+        jsonDiv.innerHTML += `<div class='result'><h3>${value.name}</h3>
+        <p>Price: $${price}</p>
+        <p>Container Type: ${value.package_unit_type}</p>
+        <p>Volume: ${value.volume_in_milliliters}  ml</p>
+        <p>Amount of containers: ${value.total_package_units}</p>
+        <img src="${value.image_thumb_url}" alt="Image of ${value.name}" />
+        </div>`
+      }
+    })
+  }
+} // End function
+
+function createButton(nextPage, buttonString) {
   const selectDiv = document.querySelector('.slct')
   const button = document.createElement('button')
   const jsonDiv = document.querySelector('.json')
@@ -86,10 +97,14 @@ function createButton(nextPage) {
       .then(res => {
         return (nextPage = res.pager.next_page), res
       })
-      .then(res => populatePage(res))
+      .then(res => {
+        const e = document.getElementById('select')
+        const choice = e.options[e.selectedIndex].value
+        domManipulation(res, choice)
+      })
       .catch(e => console.error('There was an error', e))
   })
   button.setAttribute('class', 'button')
-  button.innerHTML = 'Next Page'
+  button.innerHTML = buttonString
   selectDiv.appendChild(button)
 } // End createButton()

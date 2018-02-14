@@ -17,5 +17,7 @@ The project uses ES6 JavaScript for the most part.
 - [x] Change for loops to array methods if applicable
 
 ## Things to make better or things to add
-- [ ] Change the behaviour of changing pages. Make it so it shows the next page of what every type of liquor the user is currently looking at.
+- [x] Change the behaviour of changing pages. Make it so it shows the next page of what every type of liquor the user is currently looking at.
 - [ ] Change the Select box to empty when page changes?
+- [x] Add Previous Button
+- [ ] Make Previous Button work correctly
