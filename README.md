@@ -21,3 +21,4 @@ The project uses ES6 JavaScript for the most part.
 - [ ] Change the Select box to empty when page changes?
 - [x] Add Previous Button
 - [ ] Make Previous Button work correctly
+- [ ] Make the alcohol count work when the display is empty
